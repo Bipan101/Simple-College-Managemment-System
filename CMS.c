@@ -1,5 +1,6 @@
 
-//  This is a simple college management system that allows you to add students and courses, and display them. COPYRIGHT@BIPAN.
+//  This is a simple college management system that allows you to add students and courses, and display them.
+// Feel free to modify the code to add more features and functionality and use it as a starting point for your own project.
 
 #include <stdio.h>
 #include <stdlib.h>
