@@ -1,3 +1,5 @@
+//Simple College Management System
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -37,6 +39,64 @@ void addCourse(struct Course *courses, int *numCourses) {
         printf("Course added successfully.\n");
     } else {
         printf("Maximum number of courses reached.\n");
+    }
+}
+
+void deleteStudent(struct Student *students, int *numStudents) {
+    if (*numStudents > 0) {
+        int studentId;
+        printf("Enter student ID to delete: ");
+        scanf("%d", &studentId);
+
+        int found = 0;
+        for (int i = 0; i < *numStudents; i++) {
+            if (students[i].id == studentId) {
+                // Shift the remaining elements to fill the gap
+                for (int j = i; j < *numStudents - 1; j++) {
+                    students[j] = students[j + 1];
+                }
+                (*numStudents)--;
+                found = 1;
+                break;
+            }
+        }
+
+        if (found) {
+            printf("Student record deleted successfully.\n");
+        } else {
+            printf("Student record not found.\n");
+        }
+    } else {
+        printf("No students found.\n");
+    }
+}
+
+void deleteCourse(struct Course *courses, int *numCourses) {
+    if (*numCourses > 0) {
+        int courseId;
+        printf("Enter course ID to delete: ");
+        scanf("%d", &courseId);
+
+        int found = 0;
+        for (int i = 0; i < *numCourses; i++) {
+            if (courses[i].id == courseId) {
+                // Shift the remaining elements to fill the gap
+                for (int j = i; j < *numCourses - 1; j++) {
+                    courses[j] = courses[j + 1];
+                }
+                (*numCourses)--;
+                found = 1;
+                break;
+            }
+        }
+
+        if (found) {
+            printf("Course record deleted successfully.\n");
+        } else {
+            printf("Course record not found.\n");
+        }
+    } else {
+        printf("No courses found.\n");
     }
 }
 
@@ -94,10 +154,12 @@ int main() {
         printf("\nCollege Management System\n\n");
         printf("1. Add Student\n");
         printf("2. Add Course\n");
-        printf("3. Display Students\n");
-        printf("4. Display Courses\n");
-        printf("5. Save Data to File\n");
-        printf("6. Exit\n");
+        printf("3. Delete Student\n");
+        printf("4. Delete Courses Record\n");
+        printf("5. Display Students Record\n");
+        printf("6. Display Courses\n");
+        printf("7. Save Data to File\n");
+        printf("8. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -109,21 +171,27 @@ int main() {
                 addCourse(courses, &numCourses);
                 break;
             case 3:
-                displayStudents(students, numStudents);
+                deleteStudent(students, &numStudents);
                 break;
             case 4:
-                displayCourses(courses, numCourses);
+                deleteCourse(courses, &numCourses);
                 break;
             case 5:
-                saveData(students, numStudents, courses, numCourses);
+                displayStudents(students, numStudents);
                 break;
             case 6:
+                displayCourses(courses, numCourses);
+                break;
+            case 7:
+                saveData(students, numStudents, courses, numCourses);
+                break;
+            case 8:
                 printf("Exiting...\n");
                 break;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 6);
+    } while (choice != 8);
 
     return 0;
 }

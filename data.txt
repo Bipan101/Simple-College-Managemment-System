@@ -1,8 +1,0 @@
-Students:
-ID: 12345
-Name: TestName TestLname
-
-Courses:
-ID: 111
-Name: Physics
-
