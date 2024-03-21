@@ -1,11 +1,6 @@
-
-//  This is a simple college management system that allows you to add students and courses, and display them.
-// Feel free to modify the code to add more features and functionality and use it as a starting point for your own project.
-
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define structures for student and course
 struct Student {
     int id;
     char fname[30];
@@ -17,7 +12,6 @@ struct Course {
     char name[60];
 };
 
-// Function to add a new student
 void addStudent(struct Student *students, int *numStudents) {
     if (*numStudents < 100) {
         printf("Enter student ID Number: ");
@@ -33,9 +27,7 @@ void addStudent(struct Student *students, int *numStudents) {
     }
 }
 
-// Function to add a new course
 void addCourse(struct Course *courses, int *numCourses) {
-    // TODO: Implement the logic to add a new course
     if (*numCourses < 100) {
         printf("\nEnter course Code:");
         scanf("%d", &courses[*numCourses].id);
@@ -48,7 +40,6 @@ void addCourse(struct Course *courses, int *numCourses) {
     }
 }
 
-// Function to display all students
 void displayStudents(struct Student *students, int numStudents) {
     printf("\nStudent List:\n");
     for (int i = 0; i < numStudents; i++) {
@@ -58,14 +49,38 @@ void displayStudents(struct Student *students, int numStudents) {
     }
 }
 
-// Function to display all courses
 void displayCourses(struct Course *courses, int numCourses) {
     printf("\nCourse List:\n");
     for (int i = 0; i < numCourses; i++) {
-        printf("Coure ID: %d\n", courses[i].id);
+        printf("Course ID: %d\n", courses[i].id);
         printf("Name of Course is: %s\n", courses[i].name);
         printf("\n");
     }
+}
+
+void saveData(struct Student *students, int numStudents, struct Course *courses, int numCourses) {
+    FILE *file = fopen("data.txt", "w");
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    fprintf(file, "Students:\n");
+    for (int i = 0; i < numStudents; i++) {
+        fprintf(file, "ID: %d\n", students[i].id);
+        fprintf(file, "Name: %s %s\n", students[i].fname, students[i].lname);
+        fprintf(file, "\n");
+    }
+
+    fprintf(file, "Courses:\n");
+    for (int i = 0; i < numCourses; i++) {
+        fprintf(file, "ID: %d\n", courses[i].id);
+        fprintf(file, "Name: %s\n", courses[i].name);
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+    printf("Data saved to file successfully.\n");
 }
 
 int main() {
@@ -81,7 +96,8 @@ int main() {
         printf("2. Add Course\n");
         printf("3. Display Students\n");
         printf("4. Display Courses\n");
-        printf("5. Exit\n");
+        printf("5. Save Data to File\n");
+        printf("6. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -99,12 +115,15 @@ int main() {
                 displayCourses(courses, numCourses);
                 break;
             case 5:
+                saveData(students, numStudents, courses, numCourses);
+                break;
+            case 6:
                 printf("Exiting...\n");
                 break;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 5);
+    } while (choice != 6);
 
     return 0;
 }
